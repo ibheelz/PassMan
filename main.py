@@ -23,5 +23,16 @@ email.grid(column=0, row=3)
 password = Label(text="Password:")
 password.grid(column=0, row=4)
 
+textbox1 = tkinter.Entry(width= 35)
+textbox1.grid(column= 1, row= 2, columnspan=2)
+
+textbox2 = tkinter.Entry(width= 35)
+textbox2.grid(column= 1, row= 3, columnspan=2)
+
+textbox3 = tkinter.Entry(width= 21)
+textbox3.grid(column= 1, row= 4)
+
+
+
 
 window.mainloop()
