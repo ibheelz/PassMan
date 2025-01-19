@@ -17,4 +17,11 @@ canvas.grid(column=1,row=1)
 website = Label(text="Website:")
 website.grid(column=0, row=2)
 
+email = Label(text="Email | Username:")
+email.grid(column=0, row=3)
+
+password = Label(text="Password:")
+password.grid(column=0, row=4)
+
+
 window.mainloop()
