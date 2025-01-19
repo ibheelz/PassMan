@@ -32,7 +32,8 @@ textbox2.grid(column= 1, row= 3, columnspan=2)
 textbox3 = tkinter.Entry(width= 21)
 textbox3.grid(column= 1, row= 4)
 
-
+button = tkinter.Button(text="Generate Password")
+button.grid(column=2, row=4)
 
 
 window.mainloop()
