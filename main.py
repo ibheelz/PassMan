@@ -1,4 +1,5 @@
 import tkinter
+FONT_NAME = "lato"
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -33,32 +34,32 @@ label_width = 20  # Set a common width for all labels and entry boxes
 entry_width = 45  # Entry boxes width
 
 # Website Label and Entry
-website = tkinter.Label(window, text="Website:", width=label_width, anchor="w", bg="#0b0926", fg="white")
+website = tkinter.Label(window, text="Website:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
 website.grid(column=0, row=1, padx=10, pady=5, sticky="w")
 
 sitebox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
 sitebox.grid(column=1, row=1, columnspan=2, pady=5)
 
 # Email Label and Entry
-email = tkinter.Label(window, text="Email | Username:", width=label_width, anchor="w", bg="#0b0926", fg="white")
+email = tkinter.Label(window, text="Email | Username:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
 email.grid(column=0, row=2, padx=10, pady=5, sticky="w")
 
 mailbox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
 mailbox.grid(column=1, row=2, columnspan=2, pady=5)
 
 # Password Label and Entry
-password = tkinter.Label(window, text="Password:", width=label_width, anchor="w", bg="#0b0926", fg="white")
+password = tkinter.Label(window, text="Password:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
 password.grid(column=0, row=3, padx=10, pady=5, sticky="w")
 
 passbox = tkinter.Entry(window, width=25, bg="#251f6b", highlightthickness=0, bd=0)
 passbox.grid(column=1, row=3, pady=5)
 
 # Password Generation Button
-generate = tkinter.Button(window, text="Generate Password", width=14, borderwidth=0)
+generate = tkinter.Button(window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0)
 generate.grid(column=2, row=3, padx=10, pady=5)
 
 # Add Button
-add = tkinter.Button(window, text="Add", width=43, borderwidth=0)
+add = tkinter.Button(window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0)
 add.grid(column=1, row=4, columnspan=2, pady=5)
 
 # Running the main loop
