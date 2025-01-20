@@ -36,30 +36,30 @@ entry_width = 45  # Entry boxes width
 website = tkinter.Label(window, text="Website:", width=label_width, anchor="w", bg="#0b0926", fg="white")
 website.grid(column=0, row=1, padx=10, pady=5, sticky="w")
 
-textbox1 = tkinter.Entry(window, width=entry_width, bg="#181450")
-textbox1.grid(column=1, row=1, columnspan=2, pady=5)
+sitebox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+sitebox.grid(column=1, row=1, columnspan=2, pady=5)
 
 # Email Label and Entry
 email = tkinter.Label(window, text="Email | Username:", width=label_width, anchor="w", bg="#0b0926", fg="white")
 email.grid(column=0, row=2, padx=10, pady=5, sticky="w")
 
-textbox2 = tkinter.Entry(window, width=entry_width)
-textbox2.grid(column=1, row=2, columnspan=2, pady=5)
+mailbox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+mailbox.grid(column=1, row=2, columnspan=2, pady=5)
 
 # Password Label and Entry
 password = tkinter.Label(window, text="Password:", width=label_width, anchor="w", bg="#0b0926", fg="white")
 password.grid(column=0, row=3, padx=10, pady=5, sticky="w")
 
-textbox3 = tkinter.Entry(window, width=25)
-textbox3.grid(column=1, row=3, pady=5)
+passbox = tkinter.Entry(window, width=25, bg="#251f6b", highlightthickness=0, bd=0)
+passbox.grid(column=1, row=3, pady=5)
 
 # Password Generation Button
-button1 = tkinter.Button(window, text="Generate Password", width=14)
-button1.grid(column=2, row=3, padx=10, pady=5)
+generate = tkinter.Button(window, text="Generate Password", width=14)
+generate.grid(column=2, row=3, padx=10, pady=5)
 
 # Add Button
-button2 = tkinter.Button(window, text="Add", width=43, bg="#ff5067")
-button2.grid(column=1, row=4, columnspan=2, pady=5)
+add = tkinter.Button(window, text="Add", width=43)
+add.grid(column=1, row=4, columnspan=2, pady=5)
 
 # Running the main loop
 window.mainloop()
