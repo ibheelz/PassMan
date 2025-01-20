@@ -54,11 +54,11 @@ passbox = tkinter.Entry(window, width=25, bg="#251f6b", highlightthickness=0, bd
 passbox.grid(column=1, row=3, pady=5)
 
 # Password Generation Button
-generate = tkinter.Button(window, text="Generate Password", width=14)
+generate = tkinter.Button(window, text="Generate Password", width=14, borderwidth=0)
 generate.grid(column=2, row=3, padx=10, pady=5)
 
 # Add Button
-add = tkinter.Button(window, text="Add", width=43)
+add = tkinter.Button(window, text="Add", width=43, borderwidth=0)
 add.grid(column=1, row=4, columnspan=2, pady=5)
 
 # Running the main loop
