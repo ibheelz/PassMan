@@ -38,6 +38,7 @@ website = tkinter.Label(window, text="Website:", font=(FONT_NAME, 15, "bold"), w
 website.grid(column=0, row=1, padx=10, pady=1, sticky="w")
 
 sitebox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+sitebox.focus()
 sitebox.grid(column=1, row=1, columnspan=2, pady=1)
 
 # mail Label and Entry
