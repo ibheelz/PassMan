@@ -25,7 +25,7 @@ window.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
 # Adding image to the canvas
 canvas = tkinter.Canvas(window, width=250, height=250, bg="#0b0926", highlightthickness=0)
 img = tkinter.PhotoImage(file="logo.png")
-image = img.subsample(2, 2)
+image = img.subsample(3, 3)
 canvas.create_image(127, 127, image=image)
 canvas.grid(column=1, row=0, pady=9)
 
@@ -55,7 +55,7 @@ passbox = tkinter.Entry(window, width=25, bg="#251f6b", highlightthickness=0, bd
 passbox.grid(column=1, row=3, pady=5)
 
 # Password Generation Button
-generate = tkinter.Button(window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0)
+generate = tkinter.Button(window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, bg="green", fg="black")
 generate.grid(column=2, row=3, padx=10, pady=1)
 
 # Add Button
