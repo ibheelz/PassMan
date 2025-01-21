@@ -4,12 +4,12 @@ FONT_NAME = "lato"
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = tkinter.Tk()
-window.config(height=1000, width=1000, padx=50, pady=50, bg="#0b0926")
+window.config(padx=20, pady=10, bg="#0b0926")
 window.title("Password Manager")
 
 # Define the window width and height
-window_width = 800  # Adjust this to your preferred width
-window_height = 600  # Adjust this to your preferred height
+window_width = 680  # Adjust this to your preferred width
+window_height = 440  # Adjust this to your preferred height
 
 # Get the screen width and height
 screen_width = window.winfo_screenwidth()
@@ -27,7 +27,7 @@ canvas = tkinter.Canvas(window, width=250, height=250, bg="#0b0926", highlightth
 img = tkinter.PhotoImage(file="logo.png")
 image = img.subsample(2, 2)
 canvas.create_image(127, 127, image=image)
-canvas.grid(column=1, row=0, pady=30)
+canvas.grid(column=1, row=0, pady=9)
 
 # Label and Entry configuration
 label_width = 20  # Set a common width for all labels and entry boxes
