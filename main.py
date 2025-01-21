@@ -46,6 +46,7 @@ email = tkinter.Label(window, text="Email | Username:", font=(FONT_NAME, 15, "bo
 email.grid(column=0, row=2, padx=10, pady=1, sticky="w")
 
 mailbox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+mailbox.insert(0, "ibhxxlz@gmail.com")
 mailbox.grid(column=1, row=2, columnspan=2, pady=1)
 
 # Password Label and Entry
