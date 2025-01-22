@@ -1,6 +1,18 @@
 import tkinter
 FONT_NAME = "lato"
 
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def add_password():
+    website_data = sitebox.get()
+    email_data = mailbox.get()
+    password_data = passbox.get()
+    print(mailbox)
+    data = open("data.txt", "a")
+    data.write(f"{website_data} | {email_data} | {password_data}")
+    data.close()
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = tkinter.Tk()
@@ -61,8 +73,10 @@ generate = tkinter.Button(window, text="Generate Password", font=(FONT_NAME, 13,
 generate.grid(column=2, row=3, padx=10, pady=1)
 
 # Add Button
-add = tkinter.Button(window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0)
+add = tkinter.Button(window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password)
 add.grid(column=1, row=4, columnspan=2, pady=1)
+
+
 
 # Running the main loop
 window.mainloop()
