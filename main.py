@@ -1,6 +1,6 @@
 import tkinter as tk
 
-FONT_NAME = "Lato"
+FONT_NAME = "Lato, serif"
 BG_COLOR = "#0b0926"
 INPUT_BG_COLOR = "#251f6b"
 SUCCESS_COLOR = "#ff5067"
@@ -13,8 +13,8 @@ def clear_fields():
 
 # ---------------------------- REMOVE LABEL ------------------------------- #
 def hide_label():
-    """Hide the success label."""
-    success.place_forget()
+    """Hide the message label."""
+    message.place_forget()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_password():
@@ -24,14 +24,15 @@ def add_password():
     password = passbox.get()
 
     if not website or not password:
-        success.config(text="Fill the form")
+        message.config(text="Please fill the form")
+        message.place(x=267, y=230)  # Show the message
     else:
         with open("data.txt", "a") as data_file:
             data_file.write(f"{website} | {email} | {password}\n")
-        success.config(text="Password Added!")
+        message.config(text="Password Added!")
+        message.place(x=277, y=225)  # Show the message
         clear_fields()
 
-    success.place(x=277, y=225)  # Show the success message
     window.after(3000, hide_label)  # Hide it after 3 seconds
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -57,26 +58,26 @@ except tk.TclError:
 canvas.grid(column=1, row=0, pady=9)
 
 # Success Label
-success = tk.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg=SUCCESS_COLOR, bg=BG_COLOR)
+message = tk.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg=SUCCESS_COLOR, bg=BG_COLOR)
 
 # Field Labels and Input Configuration
 LABEL_CONFIG = {"font": (FONT_NAME, 15, "bold"), "anchor": "w", "bg": BG_COLOR, "fg": "white"}
 INPUT_CONFIG = {"width": 45, "bg": INPUT_BG_COLOR, "highlightthickness": 0, "bd": 0}
 
 # Website
-tk.Label(window, text="Website:", width=20, **LABEL_CONFIG).grid(column=0, row=1, padx=10, pady=1, sticky="w")
+tk.Label(window, text="Website:", width=16, **LABEL_CONFIG).grid(column=0, row=1, padx=10, pady=1, sticky="w")
 sitebox = tk.Entry(window, **INPUT_CONFIG)
 sitebox.focus()
 sitebox.grid(column=1, row=1, columnspan=2, pady=1)
 
 # Email
-tk.Label(window, text="Email | Username:", width=20, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
+tk.Label(window, text="Email | Username:", width=16, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
 mailbox = tk.Entry(window, **INPUT_CONFIG)
 mailbox.insert(0, "ibhxxlz@gmail.com")
 mailbox.grid(column=1, row=2, columnspan=2, pady=1)
 
 # Password
-tk.Label(window, text="Password:", width=20, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
+tk.Label(window, text="Password:", width=16, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
 passbox = tk.Entry(window, width=25, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
 passbox.grid(column=1, row=3, pady=5)
 
