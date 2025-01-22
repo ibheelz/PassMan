@@ -1,12 +1,16 @@
 import tkinter
 FONT_NAME = "lato"
 
-
 # ---------------------------- CLEAR ------------------------------- #
 
 def clear():
     sitebox.delete(0, tkinter.END)
     passbox.delete(0, tkinter.END)
+
+# ---------------------------- REMOVE LABEL ------------------------------- #
+
+def remove():
+    success.destroy()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
@@ -17,7 +21,9 @@ def add_password():
     data = open("data.txt", "a")
     data.write(f"{website_data} | {email_data} | {password_data} \n")
     data.close()
+    success.config(text="Password Added!")
     clear()
+    window.after(3000, remove)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -46,6 +52,10 @@ img = tkinter.PhotoImage(file="logo.png")
 image = img.subsample(3, 3)
 canvas.create_image(127, 127, image=image)
 canvas.grid(column=1, row=0, pady=9)
+
+success = tkinter.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg="#ff5067", bg="#0b0926")
+success.grid(column=1, row=0)
+success.place(x=275, y=225)
 
 # Label and Entry configuration
 label_width = 20  # Set a common width for all labels and entry boxes
