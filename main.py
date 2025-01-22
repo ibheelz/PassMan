@@ -2,6 +2,12 @@ import tkinter
 FONT_NAME = "lato"
 
 
+# ---------------------------- CLEAR ------------------------------- #
+
+def clear():
+    sitebox.delete(0, tkinter.END)
+    passbox.delete(0, tkinter.END)
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def add_password():
@@ -11,6 +17,7 @@ def add_password():
     data = open("data.txt", "a")
     data.write(f"{website_data} | {email_data} | {password_data} \n")
     data.close()
+    clear()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
