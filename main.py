@@ -1,98 +1,92 @@
-import tkinter
-FONT_NAME = "lato"
+import tkinter as tk
+
+FONT_NAME = "Lato"
+BG_COLOR = "#0b0926"
+INPUT_BG_COLOR = "#251f6b"
+SUCCESS_COLOR = "#ff5067"
 
 # ---------------------------- CLEAR ------------------------------- #
-
-def clear():
-    sitebox.delete(0, tkinter.END)
-    passbox.delete(0, tkinter.END)
+def clear_fields():
+    """Clear the sitebox and passbox fields."""
+    sitebox.delete(0, tk.END)
+    passbox.delete(0, tk.END)
 
 # ---------------------------- REMOVE LABEL ------------------------------- #
-
-def remove():
-    success.destroy()
+def hide_label():
+    """Hide the success label."""
+    success.place_forget()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
 def add_password():
-    website_data = sitebox.get()
-    email_data = mailbox.get()
-    password_data = passbox.get()
-    data = open("data.txt", "a")
-    data.write(f"{website_data} | {email_data} | {password_data} \n")
-    data.close()
-    success.config(text="Password Added!")
-    clear()
-    window.after(3000, remove)
+    """Save the entered website, email, and password to a file."""
+    website = sitebox.get()
+    email = mailbox.get()
+    password = passbox.get()
+
+    if not website or not password:
+        success.config(text="Fill the form")
+    else:
+        with open("data.txt", "a") as data_file:
+            data_file.write(f"{website} | {email} | {password}\n")
+        success.config(text="Password Added!")
+        clear_fields()
+
+    success.place(x=277, y=225)  # Show the success message
+    window.after(3000, hide_label)  # Hide it after 3 seconds
 
 # ---------------------------- UI SETUP ------------------------------- #
-
-window = tkinter.Tk()
-window.config(padx=20, pady=10, bg="#0b0926")
+window = tk.Tk()
 window.title("Password Manager")
+window.config(padx=20, pady=10, bg=BG_COLOR)
 
-# Define the window width and height
-window_width = 680  # Adjust this to your preferred width
-window_height = 440  # Adjust this to your preferred height
-
-# Get the screen width and height
+# Center the window on the screen
+WINDOW_WIDTH, WINDOW_HEIGHT = 680, 440
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
+x_pos = (screen_width - WINDOW_WIDTH) // 2
+y_pos = (screen_height - WINDOW_HEIGHT) // 2
+window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{x_pos}+{y_pos}")
 
-# Calculate the position for the window to be centered
-x_pos = (screen_width - window_width) // 2
-y_pos = (screen_height - window_height) // 2
-
-# Set the geometry of the window (Width x Height + X_position + Y_position)
-window.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
-
-# Adding image to the canvas
-canvas = tkinter.Canvas(window, width=250, height=250, bg="#0b0926", highlightthickness=0)
-img = tkinter.PhotoImage(file="logo.png")
-image = img.subsample(3, 3)
-canvas.create_image(127, 127, image=image)
+# Add logo to the canvas
+canvas = tk.Canvas(window, width=250, height=250, bg=BG_COLOR, highlightthickness=0)
+try:
+    img = tk.PhotoImage(file="logo.png").subsample(3, 3)
+    canvas.create_image(127, 127, image=img)
+except tk.TclError:
+    canvas.create_text(127, 127, text="Logo Missing", fill="white", font=(FONT_NAME, 15, "bold"))
 canvas.grid(column=1, row=0, pady=9)
 
-success = tkinter.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg="#ff5067", bg="#0b0926")
-success.grid(column=1, row=0)
-success.place(x=275, y=225)
+# Success Label
+success = tk.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg=SUCCESS_COLOR, bg=BG_COLOR)
 
-# Label and Entry configuration
-label_width = 20  # Set a common width for all labels and entry boxes
-entry_width = 45  # Entry boxes width
+# Field Labels and Input Configuration
+LABEL_CONFIG = {"font": (FONT_NAME, 15, "bold"), "anchor": "w", "bg": BG_COLOR, "fg": "white"}
+INPUT_CONFIG = {"width": 45, "bg": INPUT_BG_COLOR, "highlightthickness": 0, "bd": 0}
 
-# Website Label and Entry
-website = tkinter.Label(window, text="Website:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
-website.grid(column=0, row=1, padx=10, pady=1, sticky="w")
-
-sitebox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+# Website
+tk.Label(window, text="Website:", width=20, **LABEL_CONFIG).grid(column=0, row=1, padx=10, pady=1, sticky="w")
+sitebox = tk.Entry(window, **INPUT_CONFIG)
 sitebox.focus()
 sitebox.grid(column=1, row=1, columnspan=2, pady=1)
 
-# mail Label and Entry
-email = tkinter.Label(window, text="Email | Username:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
-email.grid(column=0, row=2, padx=10, pady=1, sticky="w")
-
-mailbox = tkinter.Entry(window, width=entry_width, bg="#251f6b", highlightthickness=0, bd=0)
+# Email
+tk.Label(window, text="Email | Username:", width=20, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
+mailbox = tk.Entry(window, **INPUT_CONFIG)
 mailbox.insert(0, "ibhxxlz@gmail.com")
 mailbox.grid(column=1, row=2, columnspan=2, pady=1)
 
-# Password Label and Entry
-password = tkinter.Label(window, text="Password:", font=(FONT_NAME, 15, "bold"), width=label_width, anchor="w", bg="#0b0926", fg="white")
-password.grid(column=0, row=3, padx=10, pady=1, sticky="w")
-
-passbox = tkinter.Entry(window, width=25, bg="#251f6b", highlightthickness=0, bd=0)
+# Password
+tk.Label(window, text="Password:", width=20, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
+passbox = tk.Entry(window, width=25, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
 passbox.grid(column=1, row=3, pady=5)
 
-# Password Generation Button
-generate = tkinter.Button(window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, bg="green", fg="black")
-generate.grid(column=2, row=3, padx=10, pady=1)
+# Buttons
+tk.Button(
+    window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, bg="green", fg="black"
+).grid(column=2, row=3, padx=10, pady=1)
+tk.Button(
+    window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password
+).grid(column=1, row=4, columnspan=2, pady=1)
 
-# Add Button
-add = tkinter.Button(window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password)
-add.grid(column=1, row=4, columnspan=2, pady=1)
-
-
-
-# Running the main loop
+# Main Loop
 window.mainloop()
