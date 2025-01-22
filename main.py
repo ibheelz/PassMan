@@ -30,7 +30,7 @@ def add_password():
         with open("data.txt", "a") as data_file:
             data_file.write(f"{website} | {email} | {password}\n")
         message.config(text="Password Added!")
-        message.place(x=277, y=225)  # Show the message
+        message.place(x=270, y=225)  # Show the message
         clear_fields()
 
     window.after(3000, hide_label)  # Hide it after 3 seconds
