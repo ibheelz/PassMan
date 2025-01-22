@@ -8,9 +8,8 @@ def add_password():
     website_data = sitebox.get()
     email_data = mailbox.get()
     password_data = passbox.get()
-    print(mailbox)
     data = open("data.txt", "a")
-    data.write(f"{website_data} | {email_data} | {password_data}")
+    data.write(f"{website_data} | {email_data} | {password_data} \n")
     data.close()
 
 # ---------------------------- UI SETUP ------------------------------- #
