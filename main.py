@@ -15,24 +15,25 @@ nr_letters = random.randint(8, 10)
 nr_symbols = random.randint(2, 4)
 nr_numbers = random.randint(2, 4)
 
-password_list = []
+def generate_password ():
+    password_list = []
 
-for char in range(nr_letters):
-  password_list.append(random.choice(letters))
+    for char in range(nr_letters):
+      password_list.append(random.choice(letters))
 
-for char in range(nr_symbols):
-  password_list += random.choice(symbols)
+    for char in range(nr_symbols):
+      password_list += random.choice(symbols)
 
-for char in range(nr_numbers):
-  password_list += random.choice(numbers)
+    for char in range(nr_numbers):
+      password_list += random.choice(numbers)
 
-random.shuffle(password_list)
+    random.shuffle(password_list)
 
-password = ""
-for char in password_list:
-  password += char
+    password = ""
+    for char in password_list:
+      password += char
 
-print(f"Your password is: {password}")
+    passbox.insert(0, f"{password}")
 
 # ---------------------------- CLEAR ------------------------------- #
 def clear_fields():
@@ -112,7 +113,7 @@ passbox.grid(column=1, row=3, pady=5)
 
 # Buttons
 tk.Button(
-    window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, bg="green", fg="black"
+    window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
 ).grid(column=2, row=3, padx=10, pady=1)
 tk.Button(
     window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password
