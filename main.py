@@ -18,6 +18,7 @@ nr_numbers = random.randint(2, 4)
 def generate_password ():
     password_list = []
     passbox.delete(0, tk.END)
+
     for char in range(nr_letters):
       password_list.append(random.choice(letters))
 
