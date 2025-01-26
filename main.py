@@ -11,6 +11,7 @@ letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
+
 nr_letters = random.randint(8, 10)
 nr_symbols = random.randint(2, 4)
 nr_numbers = random.randint(2, 4)
@@ -18,9 +19,6 @@ nr_numbers = random.randint(2, 4)
 def generate_password ():
     password_list = []
     passbox.delete(0, tk.END)
-
-
-
 
     for char in range(nr_letters):
       password_list.append(random.choice(letters))
