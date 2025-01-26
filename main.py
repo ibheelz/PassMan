@@ -13,6 +13,7 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 
 
+
 nr_letters = random.randint(8, 10)
 nr_symbols = random.randint(2, 4)
 nr_numbers = random.randint(2, 4)
