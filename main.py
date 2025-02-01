@@ -1,6 +1,5 @@
 import tkinter as tk
 import random
-
 FONT_NAME = "Lato, serif"
 BG_COLOR = "#0b0926"
 INPUT_BG_COLOR = "#251f6b"
@@ -14,6 +13,7 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 nr_letters = random.randint(8, 10)
 
 nr_symbols = random.randint(2, 4)
+
 nr_numbers = random.randint(2, 4)
 
 def generate_password ():
