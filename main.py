@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 
+
 FONT_NAME = "Lato, serif"
 BG_COLOR = "#0b0926"
 INPUT_BG_COLOR = "#251f6b"
