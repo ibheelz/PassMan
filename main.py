@@ -69,17 +69,17 @@ def add_password():
         try:
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
-                data.update(new_data)
-                json.dump(data, data_file, indent=4)
-
-
-        except:
+        except FileNotFoundError:
             with open("data.json", "w") as data_file:
                 json.dump(new_data, data_file, indent=4)
-
-        message.config(text="Password Added!")
-        message.place(x=270, y=225)  # Show the message
-        clear_fields()
+        else:
+            data.update(new_data)
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+        finally:
+            message.config(text="Password Added!")
+            message.place(x=270, y=225)  # Show the message
+            clear_fields()
 
     window.after(3000, hide_label)  # Hide it after 3 seconds
 
