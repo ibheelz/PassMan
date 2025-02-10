@@ -66,12 +66,16 @@ def add_password():
         message.config(text="Please fill the form")
         message.place(x=267, y=230)  # Show the message
     else:
-        with open("data.json", "r") as data_file:
-            data = json.load(data_file)
-            data.update(new_data)
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+                data.update(new_data)
+                json.dump(data, data_file, indent=4)
 
-        with open("data.json", "w") as data_file:
-            json.dump(data, data_file, indent=4)
+
+        except:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
 
         message.config(text="Password Added!")
         message.place(x=270, y=225)  # Show the message
