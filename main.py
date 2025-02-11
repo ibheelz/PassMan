@@ -81,6 +81,7 @@ def add_password():
             message.place(x=270, y=225)  # Show the message
             clear_fields()
 
+
     window.after(3000, hide_label)  # Hide it after 3 seconds
 
 # ---------------------------- UI SETUP ------------------------------- #
