@@ -115,28 +115,30 @@ INPUT_CONFIG = {"width": 45, "bg": INPUT_BG_COLOR, "highlightthickness": 0, "bd"
 
 # Website
 tk.Label(window, text="Website:", width=16, **LABEL_CONFIG).grid(column=0, row=1, padx=10, pady=1, sticky="w")
-sitebox = tk.Entry(window, **INPUT_CONFIG)
+sitebox = tk.Entry(window, width=27, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
 sitebox.focus()
-sitebox.grid(column=1, row=1, columnspan=2, pady=1)
+sitebox.grid(column=1, row=1)
 
 # Email
 tk.Label(window, text="Email | Username:", width=16, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
 mailbox = tk.Entry(window, **INPUT_CONFIG)
 mailbox.insert(0, "ibhxxlz@gmail.com")
-mailbox.grid(column=1, row=2, columnspan=2, pady=1)
-
+mailbox.grid(column=1, row=2, columnspan=2)
 # Password
 tk.Label(window, text="Password:", width=16, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
-passbox = tk.Entry(window, width=25, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
-passbox.grid(column=1, row=3, pady=5)
+passbox = tk.Entry(window, width=27, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
+passbox.grid(column=1, row=3)
 
 # Buttons
 tk.Button(
+    window, text="Search", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
+).grid(column=2, row=1)
+tk.Button(
     window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
-).grid(column=2, row=3, padx=10, pady=1)
+).grid(column=2, row=3)
 tk.Button(
     window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password
-).grid(column=1, row=4, columnspan=2, pady=1)
+).grid(column=1, row=4, columnspan=2)
 
 # Main Loop
 window.mainloop()
