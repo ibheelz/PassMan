@@ -84,6 +84,11 @@ def add_password():
 
     window.after(3000, hide_label)  # Hide it after 3 seconds
 
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+def find_password():
+    print(sitebox)
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = tk.Tk()
 window.title("Password Manager")
@@ -109,6 +114,7 @@ canvas.grid(column=1, row=0, pady=9)
 # Success Label
 message = tk.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg=SUCCESS_COLOR, bg=BG_COLOR)
 
+
 # Field Labels and Input Configuration
 LABEL_CONFIG = {"font": (FONT_NAME, 15, "bold"), "anchor": "w", "bg": BG_COLOR, "fg": "white"}
 INPUT_CONFIG = {"width": 45, "bg": INPUT_BG_COLOR, "highlightthickness": 0, "bd": 0}
@@ -131,7 +137,7 @@ passbox.grid(column=1, row=3)
 
 # Buttons
 tk.Button(
-    window, text="Search", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
+    window, text="Search", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=find_password, bg="green", fg="black"
 ).grid(column=2, row=1)
 tk.Button(
     window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
