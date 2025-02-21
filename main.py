@@ -107,6 +107,7 @@ canvas = tk.Canvas(window, width=250, height=250, bg=BG_COLOR, highlightthicknes
 try:
     img = tk.PhotoImage(file="logo.png").subsample(3, 3)
     canvas.create_image(127, 127, image=img)
+
 except tk.TclError:
     canvas.create_text(127, 127, text="Logo Missing", fill="white", font=(FONT_NAME, 15, "bold"))
 canvas.grid(column=1, row=0, pady=9)
