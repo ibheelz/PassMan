@@ -131,6 +131,7 @@ tk.Label(window, text="Email | Username:", width=16, **LABEL_CONFIG).grid(column
 mailbox = tk.Entry(window, **INPUT_CONFIG)
 mailbox.insert(0, "ibhxxlz@gmail.com")
 mailbox.grid(column=1, row=2, columnspan=2)
+
 # Password
 tk.Label(window, text="Password:", width=16, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
 passbox = tk.Entry(window, width=27, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
