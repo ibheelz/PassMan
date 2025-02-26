@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter import messagebox
 import random
 import json
+import os
 
 
 FONT_NAME = "Lato, serif"
@@ -9,6 +11,7 @@ INPUT_BG_COLOR = "#251f6b"
 SUCCESS_COLOR = "#ff5067"
 
 # ---------------------------- GENERATE PASSWORD ------------------------------- #
+
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
@@ -41,21 +44,24 @@ def generate_password ():
     passbox.insert(0, f"{password}")
 
 # ---------------------------- CLEAR ------------------------------- #
+
 def clear_fields():
     """Clear the sitebox and passbox fields."""
     sitebox.delete(0, tk.END)
     passbox.delete(0, tk.END)
 
 # ---------------------------- REMOVE LABEL ------------------------------- #
+
 def hide_label():
     """Hide the message label."""
     message.place_forget()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
 def add_password():
     """Save the entered website, email, and password to a file."""
     website = sitebox.get()
-    email = mailbox.get()
+    email = emailbox.get()
     password = passbox.get()
     new_data = {website:{
         "email": email,
@@ -86,10 +92,34 @@ def add_password():
 
 
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
+
 def find_password():
-    print(sitebox)
+    website = sitebox.get().strip()
+
+    if not website:
+        tk.messagebox.showerror(title = "Error", message = "Please enter a website to search")
+        return
+
+    if not os.path.exists("data.json") or os.stat("data.json").st_size == 0:
+        messagebox.showerror(title="Error", message="No data found! The file is empty or missing.")
+        return
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        tk.messagebox.showerror(title = "Error", message = "No data found")
+    except json.JSONDecodeError:
+            messagebox.showerror(title="Error", message="Data file is corrupted! Please delete or fix 'data.json'.")
+
+    if website in data:
+        email = data[website]["email"]
+        password = data[website]["password"]
+        tk.messagebox.showinfo(title = "PassMan", message = f"✅ Found details for {website}!\n\n📧 Email: {email}\n🔑 Password: {password}")
+    else:
+        tk.messagebox.showerror(title = "Not Found!", message = "❌ No details found for {website}!")
 
 # ---------------------------- UI SETUP ------------------------------- #
+
 window = tk.Tk()
 window.title("Password Manager")
 window.config(padx=20, pady=10, bg=BG_COLOR)
@@ -128,9 +158,9 @@ sitebox.grid(column=1, row=1)
 
 # Email
 tk.Label(window, text="Email | Username:", width=16, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
-mailbox = tk.Entry(window, **INPUT_CONFIG)
-mailbox.insert(0, "ibhxxlz@gmail.com")
-mailbox.grid(column=1, row=2, columnspan=2)
+emailbox = tk.Entry(window, **INPUT_CONFIG)
+emailbox.insert(0, "ibhxxlz@gmail.com")
+emailbox.grid(column=1, row=2, columnspan=2)
 
 # Password
 tk.Label(window, text="Password:", width=16, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
