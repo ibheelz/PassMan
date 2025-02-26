@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-# import pyperclip
 import random
 import json
 import os
@@ -13,84 +12,61 @@ SUCCESS_COLOR = "#ff5067"
 
 # ---------------------------- GENERATE PASSWORD ------------------------------- #
 
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
-
-nr_letters = random.randint(8, 10)
-
-nr_symbols = random.randint(2, 4)
-
-nr_numbers = random.randint(2, 4)
-
-def generate_password ():
-    password_list = []
+def generate_password():
     passbox.delete(0, tk.END)
 
-    for char in range(nr_letters):
-      password_list.append(random.choice(letters))
+    letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    numbers = '0123456789'
+    symbols = '!#$%&()*+'
 
-    for char in range(nr_symbols):
-      password_list += random.choice(symbols)
-
-    for char in range(nr_numbers):
-      password_list += random.choice(numbers)
+    password_list = (
+        [random.choice(letters) for _ in range(random.randint(8, 10))] +
+        [random.choice(symbols) for _ in range(random.randint(2, 4))] +
+        [random.choice(numbers) for _ in range(random.randint(2, 4))]
+    )
 
     random.shuffle(password_list)
-
-    password = ""
-    for char in password_list:
-      password += char
-
-    passbox.insert(0, f"{password}")
+    passbox.insert(0, "".join(password_list))
 
 # ---------------------------- CLEAR ------------------------------- #
 
 def clear_fields():
-    """Clear the sitebox and passbox fields."""
     sitebox.delete(0, tk.END)
     passbox.delete(0, tk.END)
 
 # ---------------------------- REMOVE LABEL ------------------------------- #
 
 def hide_label():
-    """Hide the message label."""
     message.place_forget()
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def add_password():
-    """Save the entered website, email, and password to a file."""
     website = sitebox.get()
     email = emailbox.get()
     password = passbox.get()
-    new_data = {website:{
-        "email": email,
-        "password": password
-    }}
 
     if not website or not password:
         message.config(text="Please fill the form")
-        message.place(x=267, y=230)  # Show the message
     else:
+        new_data = {website: {"email": email, "password": password}}
+
         try:
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
-        except FileNotFoundError:
-            with open("data.json", "w") as data_file:
-                json.dump(new_data, data_file, indent=4)
-        else:
-            data.update(new_data)
-            with open("data.json", "w") as data_file:
-                json.dump(data, data_file, indent=4)
-        finally:
-            message.config(text="Password Added!")
-            message.place(x=270, y=225)  # Show the message
-            clear_fields()
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {}
 
+        data.update(new_data)
 
-    window.after(3000, hide_label)  # Hide it after 3 seconds
+        with open("data.json", "w") as data_file:
+            json.dump(data, data_file, indent=4)
 
+        message.config(text="Password Added!")
+        clear_fields()
+
+    message.place(x=270, y=225)
+    window.after(3000, hide_label)  # Hide after 3 seconds
 
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
 
@@ -98,26 +74,22 @@ def find_password():
     website = sitebox.get().strip()
 
     if not website:
-        tk.messagebox.showerror(title = "Error", message = "Please enter a website to search")
-        return
+        return messagebox.showerror("Error", "Please enter a website to search")
 
     if not os.path.exists("data.json") or os.stat("data.json").st_size == 0:
-        messagebox.showerror(title="Error", message="No data found! The file is empty or missing.")
-        return
+        return messagebox.showerror("Error", "No data found!")
+
     try:
         with open("data.json", "r") as data_file:
             data = json.load(data_file)
-    except FileNotFoundError:
-        tk.messagebox.showerror(title = "Error", message = "No data found")
-    except json.JSONDecodeError:
-            messagebox.showerror(title="Error", message="Data file is corrupted! Please delete or fix 'data.json'.")
+    except (FileNotFoundError, json.JSONDecodeError):
+        return messagebox.showerror("Error", "Data file is corrupted!")
 
-    if website in data:
-        email = data[website]["email"]
-        password = data[website]["password"]
-        tk.messagebox.showinfo(title = "PassMan", message = f"✅ Found details for {website}!\n\n📧 Email: {email}\n🔑 Password: {password}")
+    entry = data.get(website)
+    if entry:
+        messagebox.showinfo("PassMan", f"✅ Found details for {website}!\n\n📧 Email: {entry['email']}\n🔑 Password: {entry['password']}")
     else:
-        tk.messagebox.showerror(title = "Not Found!", message = "❌ No details found for {website}!")
+        messagebox.showerror("Not Found!", f"❌ No details found for {website}!")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -125,20 +97,17 @@ window = tk.Tk()
 window.title("Password Manager")
 window.config(padx=20, pady=10, bg=BG_COLOR)
 
-# Center the window on the screen
+# Center the window
 WINDOW_WIDTH, WINDOW_HEIGHT = 680, 440
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
-x_pos = (screen_width - WINDOW_WIDTH) // 2
-y_pos = (screen_height - WINDOW_HEIGHT) // 2
+x_pos = (window.winfo_screenwidth() - WINDOW_WIDTH) // 2
+y_pos = (window.winfo_screenheight() - WINDOW_HEIGHT) // 2
 window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{x_pos}+{y_pos}")
 
-# Add logo to the canvas
+# Canvas for Logo
 canvas = tk.Canvas(window, width=250, height=250, bg=BG_COLOR, highlightthickness=0)
 try:
     img = tk.PhotoImage(file="logo.png").subsample(3, 3)
     canvas.create_image(127, 127, image=img)
-
 except tk.TclError:
     canvas.create_text(127, 127, text="Logo Missing", fill="white", font=(FONT_NAME, 15, "bold"))
 canvas.grid(column=1, row=0, pady=9)
@@ -146,38 +115,28 @@ canvas.grid(column=1, row=0, pady=9)
 # Success Label
 message = tk.Label(window, text=" ", font=(FONT_NAME, 13, "bold"), fg=SUCCESS_COLOR, bg=BG_COLOR)
 
-
-# Field Labels and Input Configuration
+# Labels & Input Fields
 LABEL_CONFIG = {"font": (FONT_NAME, 15, "bold"), "anchor": "w", "bg": BG_COLOR, "fg": "white"}
 INPUT_CONFIG = {"width": 45, "bg": INPUT_BG_COLOR, "highlightthickness": 0, "bd": 0}
 
-# Website
 tk.Label(window, text="Website:", width=16, **LABEL_CONFIG).grid(column=0, row=1, padx=10, pady=1, sticky="w")
 sitebox = tk.Entry(window, width=27, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
 sitebox.focus()
 sitebox.grid(column=1, row=1)
 
-# Email
 tk.Label(window, text="Email | Username:", width=16, **LABEL_CONFIG).grid(column=0, row=2, padx=10, pady=1, sticky="w")
 emailbox = tk.Entry(window, **INPUT_CONFIG)
 emailbox.insert(0, "ibhxxlz@gmail.com")
 emailbox.grid(column=1, row=2, columnspan=2)
 
-# Password
 tk.Label(window, text="Password:", width=16, **LABEL_CONFIG).grid(column=0, row=3, padx=10, pady=1, sticky="w")
 passbox = tk.Entry(window, width=27, bg=INPUT_BG_COLOR, highlightthickness=0, bd=0)
 passbox.grid(column=1, row=3)
 
 # Buttons
-tk.Button(
-    window, text="Search", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=find_password, bg="green", fg="black"
-).grid(column=2, row=1)
-tk.Button(
-    window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black"
-).grid(column=2, row=3)
-tk.Button(
-    window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password
-).grid(column=1, row=4, columnspan=2)
+tk.Button(window, text="Search", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=find_password, bg="green", fg="black").grid(column=2, row=1)
+tk.Button(window, text="Generate Password", font=(FONT_NAME, 13, "bold"), width=14, borderwidth=0, command=generate_password, bg="green", fg="black").grid(column=2, row=3)
+tk.Button(window, text="Add", font=(FONT_NAME, 13, "bold"), width=42, borderwidth=0, command=add_password).grid(column=1, row=4, columnspan=2)
 
 # Main Loop
 window.mainloop()
