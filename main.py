@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import pyperclip
+# import pyperclip
 import random
 import json
 import os
